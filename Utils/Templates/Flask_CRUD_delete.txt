@@ -1,0 +1,12 @@
+@app.route('/delete_{}', methods=['POST'])
+def delete_{}():
+    params = request.json
+    {}
+    if {}.delete({}):
+        code = 200
+        response = "OK"
+    else:
+        code = 504
+        response = "Error"
+
+    return json.dumps({{"code": code, "response": response}})

@@ -1,0 +1,8 @@
+@app.route('/get_all_{}', methods=['POST'])
+def get_all_{}():
+    response = []
+
+    for elem in {}.get_all():
+        response.append(elem.serialize())
+
+    return json.dumps({{"code": 200, "response": response}})
