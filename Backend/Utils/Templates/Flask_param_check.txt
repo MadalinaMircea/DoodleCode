@@ -1,0 +1,4 @@
+if {} in params:
+        {} = params[{}]
+    else:
+        {} = {}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Models/DoodleRecognition" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Models/keras_frcnn" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Models/yolov5" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Utils/coco-annotator" vcs="Git" />
+  </component>
+</project>

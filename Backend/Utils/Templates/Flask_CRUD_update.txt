@@ -1,0 +1,12 @@
+@app.route('/update_{}', methods=['POST'])
+def update_{}():
+    params = request.json
+    {}
+    if {}.update({}):
+        code = 200
+        response = "OK"
+    else:
+        code = 504
+        response = "Error"
+
+    return json.dumps({{"code": code, "response": response}})

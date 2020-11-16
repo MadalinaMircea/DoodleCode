@@ -1,0 +1,13 @@
+E:\School\CISE\DoodleRecognizerFront\DoodleRecognizerFront\DoodleRecognizerFront\bin\Debug\DoodleRecognizerFront.exe.config
+E:\School\CISE\DoodleRecognizerFront\DoodleRecognizerFront\DoodleRecognizerFront\bin\Debug\DoodleRecognizerFront.exe
+E:\School\CISE\DoodleRecognizerFront\DoodleRecognizerFront\DoodleRecognizerFront\bin\Debug\DoodleRecognizerFront.pdb
+E:\School\CISE\DoodleRecognizerFront\DoodleRecognizerFront\DoodleRecognizerFront\obj\Debug\DoodleRecognizerFront.csprojAssemblyReference.cache
+E:\School\CISE\DoodleRecognizerFront\DoodleRecognizerFront\DoodleRecognizerFront\obj\Debug\DoodleRecognizerFront.Form1.resources
+E:\School\CISE\DoodleRecognizerFront\DoodleRecognizerFront\DoodleRecognizerFront\obj\Debug\DoodleRecognizerFront.Properties.Resources.resources
+E:\School\CISE\DoodleRecognizerFront\DoodleRecognizerFront\DoodleRecognizerFront\obj\Debug\DoodleRecognizerFront.csproj.GenerateResource.cache
+E:\School\CISE\DoodleRecognizerFront\DoodleRecognizerFront\DoodleRecognizerFront\obj\Debug\DoodleRecognizerFront.csproj.CoreCompileInputs.cache
+E:\School\CISE\DoodleRecognizerFront\DoodleRecognizerFront\DoodleRecognizerFront\obj\Debug\DoodleRecognizerFront.exe
+E:\School\CISE\DoodleRecognizerFront\DoodleRecognizerFront\DoodleRecognizerFront\obj\Debug\DoodleRecognizerFront.pdb
+E:\School\CISE\DoodleRecognizerFront\DoodleRecognizerFront\DoodleRecognizerFront\bin\Debug\RestSharp.dll
+E:\School\CISE\DoodleRecognizerFront\DoodleRecognizerFront\DoodleRecognizerFront\bin\Debug\RestSharp.xml
+E:\School\CISE\DoodleRecognizerFront\DoodleRecognizerFront\DoodleRecognizerFront\obj\Debug\DoodleRecognizerFront.csproj.CopyComplete
