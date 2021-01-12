@@ -1,5 +1,0 @@
-@app.route('/size_{}', methods=['POST'])
-def size_{}():
-    response = {}.size()
-
-    return json.dumps({{"code": 200, "response": response}})

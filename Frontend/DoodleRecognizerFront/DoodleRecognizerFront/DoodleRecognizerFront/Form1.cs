@@ -11,93 +11,65 @@ using System.Net.Http;
 using System.IO;
 using System.Net;
 using RestSharp;
+using System.Speech.Synthesis;
+using Newtonsoft.Json;
+using DoodleRecognizerFront.ServerCommunication;
+using System.Speech.Recognition;
+using System.Globalization;
 
 namespace DoodleRecognizerFront
 {
     public partial class Form1 : Form
     {
-        bool isDragging = false;
-        int currentX = 0;
-        int currentY = 0;
-        int xUp = 0;
-        int xDown = 0;
-        int yUp = 0;
-        int yDown = 0;
-        Rectangle rectCropArea;
+        TextToSpeech speech = new TextToSpeech();
 
-        private static readonly HttpClient client = new HttpClient();
+        ServerCommunicator server = new ServerCommunicator();
 
-        Image image;
+        List<DetectedObject> detected;
+
+        static CultureInfo ci = new CultureInfo("en-us");
+        static SpeechRecognitionEngine sre =
+          new SpeechRecognitionEngine(ci);
+
         public Form1()
         {
             InitializeComponent();
             ImagePictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
 
-            ImagePictureBox.Controls.Add(CropPictureBox);
-            CropPictureBox.Location = new Point(0, 0);
-            CropPictureBox.BackColor = Color.Transparent;
+
+            MainPanel.Visible = true;
+            DetectedPanel.Visible = false;
+
+            Speak("Choose your picture");
+
+            sre.SetInputToDefaultAudioDevice();
+            sre.SpeechRecognized += sre_SpeechRecognized;
+            Grammar g_HelloGoodbye = GetHelloGoodbyeGrammar();
+            Grammar g_SetTextBox = GetTextBox1TextGrammar();
+            sre.LoadGrammarAsync(g_HelloGoodbye);
+            sre.LoadGrammarAsync(g_SetTextBox);
+            // sre.RecognizeAsync() is in CheckBox event
         }
 
-        //async Task PostRequestAsync()
-        //{
-        //byte[] bytes = ImageToByteArray(ImagePictureBox.Image);
-        //string bytesString = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-        //    var values = new Dictionary<string, string>
-        //    {
-        //        { "doodle", bytesString },
-        //        { "pars_funcs", ParamBox.Text },
-        //        { "output_file", FileBox.Text }
-        //    };
-
-        //    var content = new FormUrlEncodedContent(values);
-
-        //    var response = await client.PostAsync("http://localhost:5000/generate_code", content);
-
-        //    ResponseLabel.Text = await response.Content.ReadAsStringAsync();
-        //}
-
-        void PostRequest()
+        static Grammar GetHelloGoodbyeGrammar()
         {
-            //var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:5000/generate_code");
-            //httpWebRequest.ContentType = "application/json";
-            //httpWebRequest.Method = "POST";
-
-            //byte[] bytes = ImageToByteArray(ImagePictureBox.Image);
-            //string bytesString = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-
-            //string json = "{\"doodle\":\"" + bytesString + "\"," +
-            //                  "\"pars_funcs\":\"" + ParamBox.Text + "\"," +
-            //                  "\"output_file\":\"" + FileBox.Text + "\"}";
-
-            //RequestLabel.Text = json;
-            //RequestLabel.Invalidate();
-
-            //using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-            //{
-            //    streamWriter.Write(json);
-            //}
-
-            //var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            //using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            //{
-            //    ResponseLabel.Text = streamReader.ReadToEnd();
-            //}
-
-            byte[] bytes = ImageToByteArray(ImagePictureBox.Image);
-            string bytesString = Convert.ToBase64String(bytes);
-
-            var client = new RestClient("http://localhost:5000/generate_code");
-            client.Timeout = -1;
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("Content-Type", "application/json");
-            string json = "{\"doodle\":\"" +
-                bytesString + "\", \"pars_funcs\": \"" +
-                ParamBox.Text + "\", \"output_file\":\"" +
-                FileBox.Text + "\"}";
-            request.AddParameter("application/json", 
-                json, ParameterType.RequestBody);
-            IRestResponse response = client.Execute(request);
-            ResponseLabel.Text = response.Content;
+            Choices ch_HelloGoodbye = new Choices();
+            ch_HelloGoodbye.Add("hello");
+            ch_HelloGoodbye.Add("goodbye");
+            GrammarBuilder gb_result =
+              new GrammarBuilder(ch_HelloGoodbye);
+            Grammar g_result = new Grammar(gb_result);
+            return g_result;
+        }
+        static Grammar GetTextBox1TextGrammar()
+        {
+            Choices ch_Colors = new Choices();
+            ch_Colors.Add(new string[] { "red", "white", "blue" });
+            GrammarBuilder gb_result = new GrammarBuilder();
+            gb_result.Append("set text box 1");
+            gb_result.Append(ch_Colors);
+            Grammar g_result = new Grammar(gb_result);
+            return g_result;
         }
 
         public byte[] ImageToByteArray(System.Drawing.Image imageIn)
@@ -108,68 +80,10 @@ namespace DoodleRecognizerFront
                 return ms.ToArray();
             }
         }
-        void pictureBox1_MouseUp(object sender, MouseEventArgs e)
-        {
-            xUp = e.X;
-            yUp = e.Y;
-
-            Rectangle rec = new Rectangle(xDown, yDown, Math.Abs(xUp - xDown), Math.Abs(yUp - yDown));
-
-            using (Pen pen = new Pen(Color.YellowGreen, 3))
-            {
-
-                ImagePictureBox.CreateGraphics().DrawRectangle(pen, rec);
-            }
-
-            xDown = xDown * ImagePictureBox.Image.Width / ImagePictureBox.Width;
-            yDown = yDown * ImagePictureBox.Image.Height / ImagePictureBox.Height;
-
-            xUp = xUp * ImagePictureBox.Image.Width / ImagePictureBox.Width;
-            yUp = yUp * ImagePictureBox.Image.Height / ImagePictureBox.Height;
-
-            rectCropArea = new Rectangle(xDown, yDown, Math.Abs(xUp - xDown), Math.Abs(yUp - yDown));
-        }
-        void pictureBox1_MouseDown(object sender, MouseEventArgs e)
-        {
-            ImagePictureBox.Invalidate();
-
-            xDown = e.X;
-            yDown = e.Y;
-        }
-
-
-
-        #region move picture at runtime
-        private void pictureBox2_MouseDown(object sender, MouseEventArgs e)
-        {
-            isDragging = true;
-
-            currentX = e.X;
-            currentY = e.Y;
-        }
-
-        private void pictureBox2_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (isDragging)
-            {
-                CropPictureBox.Top = CropPictureBox.Top + (e.Y - currentY);
-                CropPictureBox.Left = CropPictureBox.Left + (e.X - currentX);
-            }
-        }
-
-        private void pictureBox2_MouseUp(object sender, MouseEventArgs e)
-        {
-            isDragging = false;
-        }
-        #endregion
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
+            Clicked();
+
             openFileDialog1 = new OpenFileDialog
             {
                 InitialDirectory = @"D:\",
@@ -190,7 +104,7 @@ namespace DoodleRecognizerFront
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 ImagePictureBox.Load(openFileDialog1.FileName);
-                image = ImagePictureBox.Image;
+                //image = ImagePictureBox.Image;
             }
         }
 
@@ -200,76 +114,120 @@ namespace DoodleRecognizerFront
             img.RotateFlip(RotateFlipType.Rotate90FlipNone);
             ImagePictureBox.Image = img;
         }
-        private void button4_Click(object sender, EventArgs e)
+
+        private void DetectedBoxList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Size size = CropPictureBox.Size;
-            size.Width += 10;
-            size.Height += 10;
-            if (size.Width <= 250 && size.Height <= 250)
-            {
-                CropPictureBox.Size = size;
-            }
+            string text = (string)DetectedBoxList.SelectedItem;
+
+            string check = DetectedBoxList.CheckedItems.Contains(DetectedBoxList.SelectedItem) ?
+                ", selected" : ", not selected";
+
+            Speak(text + check);
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)
         {
-            Size size = CropPictureBox.Size;
-            size.Width -= 10;
-            size.Height -= 10;
-            if (size.Width >= 20 && size.Height >= 20)
-            {
-                CropPictureBox.Size = size;
-            }
-        }
+            Clicked();
+            Speak("Please wait");
 
-        private void button6_Click(object sender, EventArgs e)
-        {
-            Rectangle recorte = new Rectangle(CropPictureBox.Location.X, CropPictureBox.Location.Y, CropPictureBox.Width, CropPictureBox.Height);
-
-            Image foto = Crop(ImagePictureBox.Image, recorte);
-            ImagePictureBox.Image = foto;
-
-            //Rectangle recorte = pictureBox1.RectangleToClient(pictureBox2.RectangleToScreen(pictureBox2.ClientRectangle));
-            //Image foto = Crop(pictureBox1.Image, recorte);
-            //pictureBox1.Image = foto;
-
-            //try
-            //{
-            //    pictureBox1.Refresh();
-            //    //Prepare a new Bitmap on which the cropped image will be drawn
-            //    Bitmap sourceBitmap = new Bitmap(pictureBox1.Image, pictureBox1.Width, pictureBox1.Height);
-            //    Graphics g = pictureBox1.CreateGraphics();
-
-            //    //Draw the image on the Graphics object with the new dimesions
-            //    g.DrawImage(sourceBitmap, new Rectangle(0, 0, pictureBox1.Width, pictureBox1.Height), rectCropArea, GraphicsUnit.Pixel);
-            //    sourceBitmap.Dispose();
-            //}
-            //catch (Exception ex)
-            //{
-
-            //}
-        }
-
-        private Image Crop(Image img, Rectangle rect)
-        {
             try
             {
-                Bitmap bitmap = new Bitmap(img);
-                Bitmap croppedBitmap = bitmap.Clone(rect, bitmap.PixelFormat);
+                byte[] bytes = ImageToByteArray(ImagePictureBox.Image);
 
-                return (Image)(croppedBitmap);
+                List<string> detected;
+
+                string error = server.PostRequestDetection(bytes, out detected);
+
+                if (error.Trim() == "")
+                {
+                    foreach (string det in detected)
+                    {
+                        DetectedBoxList.Items.Add(det, true);
+                    }
+
+                    DetectedPanel.Visible = true;
+                    MainPanel.Visible = false;
+
+                    Speak("Choose your objects of interest");
+                    
+                }
+                else
+                {
+                    MessageBox.Show("1" + error + "2");
+                }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error");
-
-                return null;
+                Speak("There was an error. Sorry!");
+                MessageBox.Show("There was an error. Sorry! " + ex.Message);
             }
         }
 
-        private void GenerateButton_Click(object sender, EventArgs e)
+        void Speak(string text)
         {
-            PostRequest();
+            speech.Speak(text);
+        }
+
+        private void Button_MouseEnter(object sender, EventArgs e)
+        {
+            Speak((sender as Button).Text);
+        }
+        void Clicked()
+        {
+            Speak("Clicked");
+        }
+
+        private void GenerateCodeButton_Click(object sender, EventArgs e)
+        {
+            Clicked();
+
+            List<string> detected = new List<string>();
+
+            foreach (string det in DetectedBoxList.CheckedItems)
+            {
+                detected.Add(det);
+            }
+
+            MessageBox.Show(server.PostRequestGeneration(detected));
+        }
+
+        void sr_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
+        {
+            MessageBox.Show("hello user");
+        }
+        private void checkBox1_CheckedChanged(object sender,
+      EventArgs e)
+        {
+            if (checkBox1.Checked == true)
+            {
+                richTextBox1.Text = "recording";
+                sre.RecognizeAsync(RecognizeMode.Multiple);
+            }
+            else if (checkBox1.Checked == false) // Turn off
+            {
+                richTextBox1.Text = "not recording";
+                sre.RecognizeAsyncCancel();
+            }
+        }
+        void sre_SpeechRecognized(object sender,
+          SpeechRecognizedEventArgs e)
+        {
+            richTextBox1.Text = "recognizing";
+            string txt = e.Result.Text;
+            float conf = e.Result.Confidence;
+            if (conf < 0.65) return;
+            this.Invoke(new MethodInvoker(() =>
+            {
+                listBox1.Items.Add("I heard you say: "
+              + txt);
+            })); // WinForm specific
+            //if (txt.IndexOf("text") >= 0 && txt.IndexOf("box") >=
+            //  0 && txt.IndexOf("1") >= 0)
+            //{
+            //    string[] words = txt.Split(' ');
+            //    this.Invoke(new MethodInvoker(() =>
+            //    { textBox1.Text = words[4]; })); // WinForm specific
+            //}
         }
     }
 }

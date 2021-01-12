@@ -1,2 +1,0 @@
-def set_{}(self, {}):
-        self.{} = {}

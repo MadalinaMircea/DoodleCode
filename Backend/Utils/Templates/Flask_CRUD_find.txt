@@ -1,7 +1,0 @@
-@app.route('/find_{}', methods=['POST'])
-def find_{}():
-    params = request.json
-    {}
-    response = {}.find({})
-
-    return json.dumps({{"code": 200, "response": response}})
