@@ -35,7 +35,7 @@ def generate_code():
 
     output_file = params["output_file"]
 
-    correct, error = generator.generate_code(classes, output_file)
+    correct, error = generator.generate_code(list(dict.fromkeys(classes)), output_file)
 
     if not correct:
         code = 504
@@ -56,6 +56,6 @@ def get_objects():
 
     imageUtils.bytes_to_image(image, "Data/received.png")
 
-    detected = detectron.detect_masks("Data/received.png", "Data/output.png", 0.2)
+    detected = list(dict.fromkeys(detectron.detect_masks("Data/received.png", "Data/output.png", 0.2)))
 
     return json.dumps({"code": code, "response": {"detected": detected}})

@@ -27,50 +27,26 @@ namespace DoodleRecognizerFront
 
         List<DetectedObject> detected;
 
-        static CultureInfo ci = new CultureInfo("en-us");
-        static SpeechRecognitionEngine sre =
-          new SpeechRecognitionEngine(ci);
+        SpeechToText speechToText = new SpeechToText();
+
+        bool isRecording = false;
 
         public Form1()
         {
             InitializeComponent();
             ImagePictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
 
-
-            MainPanel.Visible = true;
+            FirstPanel.Visible = true;
+            MainPanel.Visible = false;
             DetectedPanel.Visible = false;
+            SpeechPanel.Visible = false;
 
-            Speak("Choose your picture");
+            Speak("How would you like to proceed?");
 
-            sre.SetInputToDefaultAudioDevice();
-            sre.SpeechRecognized += sre_SpeechRecognized;
-            Grammar g_HelloGoodbye = GetHelloGoodbyeGrammar();
-            Grammar g_SetTextBox = GetTextBox1TextGrammar();
-            sre.LoadGrammarAsync(g_HelloGoodbye);
-            sre.LoadGrammarAsync(g_SetTextBox);
-            // sre.RecognizeAsync() is in CheckBox event
+            var speechRecogn = speechToText.InitRecording();
+            speechRecogn.SpeechRecognized += sre_SpeechRecognized;
         }
 
-        static Grammar GetHelloGoodbyeGrammar()
-        {
-            Choices ch_HelloGoodbye = new Choices();
-            ch_HelloGoodbye.Add("hello");
-            ch_HelloGoodbye.Add("goodbye");
-            GrammarBuilder gb_result =
-              new GrammarBuilder(ch_HelloGoodbye);
-            Grammar g_result = new Grammar(gb_result);
-            return g_result;
-        }
-        static Grammar GetTextBox1TextGrammar()
-        {
-            Choices ch_Colors = new Choices();
-            ch_Colors.Add(new string[] { "red", "white", "blue" });
-            GrammarBuilder gb_result = new GrammarBuilder();
-            gb_result.Append("set text box 1");
-            gb_result.Append(ch_Colors);
-            Grammar g_result = new Grammar(gb_result);
-            return g_result;
-        }
 
         public byte[] ImageToByteArray(System.Drawing.Image imageIn)
         {
@@ -180,6 +156,8 @@ namespace DoodleRecognizerFront
         private void GenerateCodeButton_Click(object sender, EventArgs e)
         {
             Clicked();
+            
+            Speak("Please wait");
 
             List<string> detected = new List<string>();
 
@@ -188,46 +166,78 @@ namespace DoodleRecognizerFront
                 detected.Add(det);
             }
 
-            MessageBox.Show(server.PostRequestGeneration(detected));
+            GenerateCode(detected);
         }
 
-        void sr_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
+        void sre_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
-            MessageBox.Show("hello user");
-        }
-        private void checkBox1_CheckedChanged(object sender,
-      EventArgs e)
-        {
-            if (checkBox1.Checked == true)
-            {
-                richTextBox1.Text = "recording";
-                sre.RecognizeAsync(RecognizeMode.Multiple);
-            }
-            else if (checkBox1.Checked == false) // Turn off
-            {
-                richTextBox1.Text = "not recording";
-                sre.RecognizeAsyncCancel();
-            }
-        }
-        void sre_SpeechRecognized(object sender,
-          SpeechRecognizedEventArgs e)
-        {
-            richTextBox1.Text = "recognizing";
             string txt = e.Result.Text;
             float conf = e.Result.Confidence;
             if (conf < 0.65) return;
             this.Invoke(new MethodInvoker(() =>
             {
-                listBox1.Items.Add("I heard you say: "
-              + txt);
-            })); // WinForm specific
-            //if (txt.IndexOf("text") >= 0 && txt.IndexOf("box") >=
-            //  0 && txt.IndexOf("1") >= 0)
-            //{
-            //    string[] words = txt.Split(' ');
-            //    this.Invoke(new MethodInvoker(() =>
-            //    { textBox1.Text = words[4]; })); // WinForm specific
-            //}
+                SpokenListBox.Items.Add(txt);
+            }));
+        }
+
+        private void SpeechChoiceButton_Click(object sender, EventArgs e)
+        {
+            Clicked();
+
+            SpeechPanel.Visible = true;
+            FirstPanel.Visible = false;
+
+            Speak("Press the button to record");
+        }
+
+        private void ImagesChoiceButton_Click(object sender, EventArgs e)
+        {
+            Clicked();
+
+            MainPanel.Visible = true;
+            FirstPanel.Visible = false;
+
+            Speak("Choose your picture");
+        }
+
+        private void RecordingButton_Click(object sender, EventArgs e)
+        {
+            isRecording = !isRecording;
+
+            if (isRecording == true)
+            {
+                RecordingButton.Text = "Stop Recording";
+                speechToText.StartRecording();
+            }
+            else 
+            {
+                RecordingButton.Text = "Start Recording";
+                speechToText.StopRecording();
+            }
+        }
+
+        void GenerateCode(List<string> detected)
+        {
+
+            string output = server.PostRequestGeneration(detected);
+            Speak(output);
+            MessageBox.Show(output);
+        }
+
+        private void SpeechGenerateButton_Click(object sender, EventArgs e)
+        {
+            Clicked();
+
+            Speak("Please wait");
+
+            List<string> detected = new List<string>();
+
+            foreach (string det in SpokenListBox.Items)
+            {
+                detected.Add(det);
+            }
+
+            GenerateCode(detected);
         }
     }
 }

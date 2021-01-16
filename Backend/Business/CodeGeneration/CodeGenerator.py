@@ -1,5 +1,7 @@
 import os
 import re
+import string
+
 from IntelligentModels.ModelHelper import ModelHelper
 from Business.Wordnet.WordnetRelationFinder import WordnetRelationFinder
 from Business.Wikipedia.WikipediaInformationExtractor import WikipediaInformationExtractor
@@ -16,6 +18,8 @@ class CodeGenerator:
 
         self.wordnet = WordnetRelationFinder()
         self.wiki = WikipediaInformationExtractor()
+
+        self.printable = set(string.printable)
 
         self.repo_template = open("./Business/CodeGeneration/Utils/Templates/Repository.txt", "r").read()
         self.service_template = open("./Business/CodeGeneration/Utils/Templates/Service.txt", "r").read()
@@ -106,23 +110,42 @@ class CodeGenerator:
         name = "".join(split)
         return name
 
+    def create_json_folder(self, output_folder):
+        json_folder = output_folder + "/Data/"
+        if not os.path.exists(json_folder):
+            os.mkdir(json_folder)
+
+        json_folder += "JSON/"
+
+        if not os.path.exists(json_folder):
+            os.mkdir(json_folder)
+
+        return json_folder
+
     def generate_json(self, name, info, output_folder):
-        output_file = open(output_folder + "/" + name + "_test_json.json", "w+")
+        json_folder = self.create_json_folder(output_folder)
+
+        output_file = open(json_folder + name + "_test_json.json", "w+")
         json_string = "[\n\t"
-        for desc in [self.wordnet.get_definition(name), self.wiki.get_page_summary(name), ""]:
+        for desc in [''.join(filter(lambda x: x in self.printable,
+                                    self.wordnet.get_definition(name).replace("\n", " "))),
+                     ''.join(filter(lambda x: x in self.printable,
+                                    self.wiki.get_page_summary(name).replace("\n", " "))), ""]:
             json_string += self.get_json_for_object(info, desc)
             json_string += ",\n\t"
 
         json_string = json_string[:-3] + "\n]"
-        print(json_string)
         output_file.write(json_string)
         output_file.close()
 
     def get_json_for_object(self, param_info, desc):
-        json_string = "{\n\t\t"
-        json_string += self.get_json_for_params(param_info, desc)
-        json_string = json_string[:-5] + "\n\t}"
-        return json_string
+        try:
+            json_string = "{\n\t\t"
+            json_string += self.get_json_for_params(param_info, desc)
+            json_string = json_string[:-5] + "\n\t}"
+            return json_string
+        except:
+            return ""
 
     def get_json_for_params(self, info, desc):
         json_string = ""
@@ -430,7 +453,6 @@ class CodeGenerator:
         if ":" in parameter:
             split_param = parameter.split(":")
             if len(split_param) != 2:
-                print("False")
                 return False, False, False, False
 
             name = split_param[0]

@@ -3,6 +3,9 @@ from Business.Wordnet.WordnetRelationFinder import WordnetRelationFinder
 
 wiki = WikipediaInformationExtractor()
 wn = WordnetRelationFinder()
+# import nltk
+# nltk.download('wordnet')
+
 
 print(wn.get_hyponyms("person"))
 # print(wn.get_definition("corgi"))

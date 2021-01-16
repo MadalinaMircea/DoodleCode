@@ -1,24 +1,32 @@
 from app import app
-from app import dogService, basenjiService, corgiService, curService, dalmatianService, greatpyreneesService, griffonService, huntingdogService, lapdogService, leonbergService, mexicanhairlessService, newfoundlandService, poochService, poodleService, pugService, puppyService, spitzService, toydogService, workingdogService
-from Classes.Domain.Dog import Dog
-from Classes.Domain.Basenji import Basenji
-from Classes.Domain.Corgi import Corgi
-from Classes.Domain.Cur import Cur
-from Classes.Domain.Dalmatian import Dalmatian
-from Classes.Domain.GreatPyrenees import GreatPyrenees
-from Classes.Domain.Griffon import Griffon
-from Classes.Domain.HuntingDog import HuntingDog
-from Classes.Domain.Lapdog import Lapdog
-from Classes.Domain.Leonberg import Leonberg
-from Classes.Domain.MexicanHairless import MexicanHairless
-from Classes.Domain.Newfoundland import Newfoundland
-from Classes.Domain.Pooch import Pooch
-from Classes.Domain.Poodle import Poodle
-from Classes.Domain.Pug import Pug
-from Classes.Domain.Puppy import Puppy
-from Classes.Domain.Spitz import Spitz
-from Classes.Domain.ToyDog import ToyDog
-from Classes.Domain.WorkingDog import WorkingDog
+from app import birdService, apodiformbirdService, aquaticbirdService, archaeopteryxService, archaeornisService, birdofpassageService, birdofpreyService, caprimulgiformbirdService, carinateService, cockService, coraciiformbirdService, cuculiformbirdService, dickeybirdService, gallinaceousbirdService, henService, iberomesornisService, nesterService, nightbirdService, nonpasserinebirdService, parrotService, passerineService, piciformbirdService, protoavisService, ratiteService, sinornisService, trogonService, twittererService
+from Classes.Domain.Bird import Bird
+from Classes.Domain.ApodiformBird import ApodiformBird
+from Classes.Domain.AquaticBird import AquaticBird
+from Classes.Domain.Archaeopteryx import Archaeopteryx
+from Classes.Domain.Archaeornis import Archaeornis
+from Classes.Domain.BirdOfPassage import BirdOfPassage
+from Classes.Domain.BirdOfPrey import BirdOfPrey
+from Classes.Domain.CaprimulgiformBird import CaprimulgiformBird
+from Classes.Domain.Carinate import Carinate
+from Classes.Domain.Cock import Cock
+from Classes.Domain.CoraciiformBird import CoraciiformBird
+from Classes.Domain.CuculiformBird import CuculiformBird
+from Classes.Domain.Dickeybird import Dickeybird
+from Classes.Domain.GallinaceousBird import GallinaceousBird
+from Classes.Domain.Hen import Hen
+from Classes.Domain.IberoMesornis import IberoMesornis
+from Classes.Domain.Nester import Nester
+from Classes.Domain.NightBird import NightBird
+from Classes.Domain.NonpasserineBird import NonpasserineBird
+from Classes.Domain.Parrot import Parrot
+from Classes.Domain.Passerine import Passerine
+from Classes.Domain.PiciformBird import PiciformBird
+from Classes.Domain.Protoavis import Protoavis
+from Classes.Domain.Ratite import Ratite
+from Classes.Domain.Sinornis import Sinornis
+from Classes.Domain.Trogon import Trogon
+from Classes.Domain.Twitterer import Twitterer
 
 from flask import request
 import json
@@ -30,8 +38,8 @@ def index():
     return "Hello world!"
 
 
-@app.route('/add_dog', methods=['POST'])
-def add_dog():
+@app.route('/add_bird', methods=['POST'])
+def add_bird():
     params = request.json
     
     if "description" in params:
@@ -39,7 +47,7 @@ def add_dog():
     else:
         description = ""
 
-    if dogService.add(description):
+    if birdService.add(description):
         code = 200
         response = "OK"
     else:
@@ -49,8 +57,8 @@ def add_dog():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/update_dog', methods=['POST'])
-def update_dog():
+@app.route('/update_bird', methods=['POST'])
+def update_bird():
     params = request.json
     
     if "description" in params:
@@ -58,7 +66,7 @@ def update_dog():
     else:
         description = ""
 
-    if dogService.update(description):
+    if birdService.update(description):
         code = 200
         response = "OK"
     else:
@@ -68,8 +76,8 @@ def update_dog():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/delete_dog', methods=['POST'])
-def delete_dog():
+@app.route('/delete_bird', methods=['POST'])
+def delete_bird():
     params = request.json
     
     if "description" in params:
@@ -77,7 +85,7 @@ def delete_dog():
     else:
         description = ""
 
-    if dogService.delete(description):
+    if birdService.delete(description):
         code = 200
         response = "OK"
     else:
@@ -87,8 +95,8 @@ def delete_dog():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/find_dog', methods=['POST'])
-def find_dog():
+@app.route('/find_bird', methods=['POST'])
+def find_bird():
     params = request.json
     
     if "description" in params:
@@ -96,33 +104,33 @@ def find_dog():
     else:
         description = ""
 
-    response = dogService.find(description)
+    response = birdService.find(description)
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/get_all_dog', methods=['POST'])
-def get_all_dog():
+@app.route('/get_all_bird', methods=['POST'])
+def get_all_bird():
     response = []
 
-    for elem in dogService.get_all():
+    for elem in birdService.get_all():
         response.append(elem.serialize())
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/size_dog', methods=['POST'])
-def size_dog():
-    response = dogService.size()
+@app.route('/size_bird', methods=['POST'])
+def size_bird():
+    response = birdService.size()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/add_basenji', methods=['POST'])
-def add_basenji():
+@app.route('/add_apodiformbird', methods=['POST'])
+def add_apodiformbird():
     params = request.json
     
-    if basenjiService.add():
+    if apodiformbirdService.add():
         code = 200
         response = "OK"
     else:
@@ -132,11 +140,11 @@ def add_basenji():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/update_basenji', methods=['POST'])
-def update_basenji():
+@app.route('/update_apodiformbird', methods=['POST'])
+def update_apodiformbird():
     params = request.json
     
-    if basenjiService.update():
+    if apodiformbirdService.update():
         code = 200
         response = "OK"
     else:
@@ -146,11 +154,11 @@ def update_basenji():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/delete_basenji', methods=['POST'])
-def delete_basenji():
+@app.route('/delete_apodiformbird', methods=['POST'])
+def delete_apodiformbird():
     params = request.json
     
-    if basenjiService.delete():
+    if apodiformbirdService.delete():
         code = 200
         response = "OK"
     else:
@@ -160,37 +168,37 @@ def delete_basenji():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/find_basenji', methods=['POST'])
-def find_basenji():
+@app.route('/find_apodiformbird', methods=['POST'])
+def find_apodiformbird():
     params = request.json
     
-    response = basenjiService.find()
+    response = apodiformbirdService.find()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/get_all_basenji', methods=['POST'])
-def get_all_basenji():
+@app.route('/get_all_apodiformbird', methods=['POST'])
+def get_all_apodiformbird():
     response = []
 
-    for elem in basenjiService.get_all():
+    for elem in apodiformbirdService.get_all():
         response.append(elem.serialize())
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/size_basenji', methods=['POST'])
-def size_basenji():
-    response = basenjiService.size()
+@app.route('/size_apodiformbird', methods=['POST'])
+def size_apodiformbird():
+    response = apodiformbirdService.size()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/add_corgi', methods=['POST'])
-def add_corgi():
+@app.route('/add_aquaticbird', methods=['POST'])
+def add_aquaticbird():
     params = request.json
     
-    if corgiService.add():
+    if aquaticbirdService.add():
         code = 200
         response = "OK"
     else:
@@ -200,11 +208,11 @@ def add_corgi():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/update_corgi', methods=['POST'])
-def update_corgi():
+@app.route('/update_aquaticbird', methods=['POST'])
+def update_aquaticbird():
     params = request.json
     
-    if corgiService.update():
+    if aquaticbirdService.update():
         code = 200
         response = "OK"
     else:
@@ -214,11 +222,11 @@ def update_corgi():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/delete_corgi', methods=['POST'])
-def delete_corgi():
+@app.route('/delete_aquaticbird', methods=['POST'])
+def delete_aquaticbird():
     params = request.json
     
-    if corgiService.delete():
+    if aquaticbirdService.delete():
         code = 200
         response = "OK"
     else:
@@ -228,37 +236,37 @@ def delete_corgi():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/find_corgi', methods=['POST'])
-def find_corgi():
+@app.route('/find_aquaticbird', methods=['POST'])
+def find_aquaticbird():
     params = request.json
     
-    response = corgiService.find()
+    response = aquaticbirdService.find()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/get_all_corgi', methods=['POST'])
-def get_all_corgi():
+@app.route('/get_all_aquaticbird', methods=['POST'])
+def get_all_aquaticbird():
     response = []
 
-    for elem in corgiService.get_all():
+    for elem in aquaticbirdService.get_all():
         response.append(elem.serialize())
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/size_corgi', methods=['POST'])
-def size_corgi():
-    response = corgiService.size()
+@app.route('/size_aquaticbird', methods=['POST'])
+def size_aquaticbird():
+    response = aquaticbirdService.size()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/add_cur', methods=['POST'])
-def add_cur():
+@app.route('/add_archaeopteryx', methods=['POST'])
+def add_archaeopteryx():
     params = request.json
     
-    if curService.add():
+    if archaeopteryxService.add():
         code = 200
         response = "OK"
     else:
@@ -268,11 +276,11 @@ def add_cur():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/update_cur', methods=['POST'])
-def update_cur():
+@app.route('/update_archaeopteryx', methods=['POST'])
+def update_archaeopteryx():
     params = request.json
     
-    if curService.update():
+    if archaeopteryxService.update():
         code = 200
         response = "OK"
     else:
@@ -282,11 +290,11 @@ def update_cur():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/delete_cur', methods=['POST'])
-def delete_cur():
+@app.route('/delete_archaeopteryx', methods=['POST'])
+def delete_archaeopteryx():
     params = request.json
     
-    if curService.delete():
+    if archaeopteryxService.delete():
         code = 200
         response = "OK"
     else:
@@ -296,37 +304,37 @@ def delete_cur():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/find_cur', methods=['POST'])
-def find_cur():
+@app.route('/find_archaeopteryx', methods=['POST'])
+def find_archaeopteryx():
     params = request.json
     
-    response = curService.find()
+    response = archaeopteryxService.find()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/get_all_cur', methods=['POST'])
-def get_all_cur():
+@app.route('/get_all_archaeopteryx', methods=['POST'])
+def get_all_archaeopteryx():
     response = []
 
-    for elem in curService.get_all():
+    for elem in archaeopteryxService.get_all():
         response.append(elem.serialize())
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/size_cur', methods=['POST'])
-def size_cur():
-    response = curService.size()
+@app.route('/size_archaeopteryx', methods=['POST'])
+def size_archaeopteryx():
+    response = archaeopteryxService.size()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/add_dalmatian', methods=['POST'])
-def add_dalmatian():
+@app.route('/add_archaeornis', methods=['POST'])
+def add_archaeornis():
     params = request.json
     
-    if dalmatianService.add():
+    if archaeornisService.add():
         code = 200
         response = "OK"
     else:
@@ -336,11 +344,11 @@ def add_dalmatian():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/update_dalmatian', methods=['POST'])
-def update_dalmatian():
+@app.route('/update_archaeornis', methods=['POST'])
+def update_archaeornis():
     params = request.json
     
-    if dalmatianService.update():
+    if archaeornisService.update():
         code = 200
         response = "OK"
     else:
@@ -350,11 +358,11 @@ def update_dalmatian():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/delete_dalmatian', methods=['POST'])
-def delete_dalmatian():
+@app.route('/delete_archaeornis', methods=['POST'])
+def delete_archaeornis():
     params = request.json
     
-    if dalmatianService.delete():
+    if archaeornisService.delete():
         code = 200
         response = "OK"
     else:
@@ -364,37 +372,37 @@ def delete_dalmatian():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/find_dalmatian', methods=['POST'])
-def find_dalmatian():
+@app.route('/find_archaeornis', methods=['POST'])
+def find_archaeornis():
     params = request.json
     
-    response = dalmatianService.find()
+    response = archaeornisService.find()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/get_all_dalmatian', methods=['POST'])
-def get_all_dalmatian():
+@app.route('/get_all_archaeornis', methods=['POST'])
+def get_all_archaeornis():
     response = []
 
-    for elem in dalmatianService.get_all():
+    for elem in archaeornisService.get_all():
         response.append(elem.serialize())
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/size_dalmatian', methods=['POST'])
-def size_dalmatian():
-    response = dalmatianService.size()
+@app.route('/size_archaeornis', methods=['POST'])
+def size_archaeornis():
+    response = archaeornisService.size()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/add_greatpyrenees', methods=['POST'])
-def add_greatpyrenees():
+@app.route('/add_birdofpassage', methods=['POST'])
+def add_birdofpassage():
     params = request.json
     
-    if greatpyreneesService.add():
+    if birdofpassageService.add():
         code = 200
         response = "OK"
     else:
@@ -404,11 +412,11 @@ def add_greatpyrenees():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/update_greatpyrenees', methods=['POST'])
-def update_greatpyrenees():
+@app.route('/update_birdofpassage', methods=['POST'])
+def update_birdofpassage():
     params = request.json
     
-    if greatpyreneesService.update():
+    if birdofpassageService.update():
         code = 200
         response = "OK"
     else:
@@ -418,11 +426,11 @@ def update_greatpyrenees():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/delete_greatpyrenees', methods=['POST'])
-def delete_greatpyrenees():
+@app.route('/delete_birdofpassage', methods=['POST'])
+def delete_birdofpassage():
     params = request.json
     
-    if greatpyreneesService.delete():
+    if birdofpassageService.delete():
         code = 200
         response = "OK"
     else:
@@ -432,37 +440,37 @@ def delete_greatpyrenees():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/find_greatpyrenees', methods=['POST'])
-def find_greatpyrenees():
+@app.route('/find_birdofpassage', methods=['POST'])
+def find_birdofpassage():
     params = request.json
     
-    response = greatpyreneesService.find()
+    response = birdofpassageService.find()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/get_all_greatpyrenees', methods=['POST'])
-def get_all_greatpyrenees():
+@app.route('/get_all_birdofpassage', methods=['POST'])
+def get_all_birdofpassage():
     response = []
 
-    for elem in greatpyreneesService.get_all():
+    for elem in birdofpassageService.get_all():
         response.append(elem.serialize())
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/size_greatpyrenees', methods=['POST'])
-def size_greatpyrenees():
-    response = greatpyreneesService.size()
+@app.route('/size_birdofpassage', methods=['POST'])
+def size_birdofpassage():
+    response = birdofpassageService.size()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/add_griffon', methods=['POST'])
-def add_griffon():
+@app.route('/add_birdofprey', methods=['POST'])
+def add_birdofprey():
     params = request.json
     
-    if griffonService.add():
+    if birdofpreyService.add():
         code = 200
         response = "OK"
     else:
@@ -472,11 +480,11 @@ def add_griffon():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/update_griffon', methods=['POST'])
-def update_griffon():
+@app.route('/update_birdofprey', methods=['POST'])
+def update_birdofprey():
     params = request.json
     
-    if griffonService.update():
+    if birdofpreyService.update():
         code = 200
         response = "OK"
     else:
@@ -486,11 +494,11 @@ def update_griffon():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/delete_griffon', methods=['POST'])
-def delete_griffon():
+@app.route('/delete_birdofprey', methods=['POST'])
+def delete_birdofprey():
     params = request.json
     
-    if griffonService.delete():
+    if birdofpreyService.delete():
         code = 200
         response = "OK"
     else:
@@ -500,37 +508,37 @@ def delete_griffon():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/find_griffon', methods=['POST'])
-def find_griffon():
+@app.route('/find_birdofprey', methods=['POST'])
+def find_birdofprey():
     params = request.json
     
-    response = griffonService.find()
+    response = birdofpreyService.find()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/get_all_griffon', methods=['POST'])
-def get_all_griffon():
+@app.route('/get_all_birdofprey', methods=['POST'])
+def get_all_birdofprey():
     response = []
 
-    for elem in griffonService.get_all():
+    for elem in birdofpreyService.get_all():
         response.append(elem.serialize())
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/size_griffon', methods=['POST'])
-def size_griffon():
-    response = griffonService.size()
+@app.route('/size_birdofprey', methods=['POST'])
+def size_birdofprey():
+    response = birdofpreyService.size()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/add_huntingdog', methods=['POST'])
-def add_huntingdog():
+@app.route('/add_caprimulgiformbird', methods=['POST'])
+def add_caprimulgiformbird():
     params = request.json
     
-    if huntingdogService.add():
+    if caprimulgiformbirdService.add():
         code = 200
         response = "OK"
     else:
@@ -540,11 +548,11 @@ def add_huntingdog():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/update_huntingdog', methods=['POST'])
-def update_huntingdog():
+@app.route('/update_caprimulgiformbird', methods=['POST'])
+def update_caprimulgiformbird():
     params = request.json
     
-    if huntingdogService.update():
+    if caprimulgiformbirdService.update():
         code = 200
         response = "OK"
     else:
@@ -554,11 +562,11 @@ def update_huntingdog():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/delete_huntingdog', methods=['POST'])
-def delete_huntingdog():
+@app.route('/delete_caprimulgiformbird', methods=['POST'])
+def delete_caprimulgiformbird():
     params = request.json
     
-    if huntingdogService.delete():
+    if caprimulgiformbirdService.delete():
         code = 200
         response = "OK"
     else:
@@ -568,37 +576,37 @@ def delete_huntingdog():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/find_huntingdog', methods=['POST'])
-def find_huntingdog():
+@app.route('/find_caprimulgiformbird', methods=['POST'])
+def find_caprimulgiformbird():
     params = request.json
     
-    response = huntingdogService.find()
+    response = caprimulgiformbirdService.find()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/get_all_huntingdog', methods=['POST'])
-def get_all_huntingdog():
+@app.route('/get_all_caprimulgiformbird', methods=['POST'])
+def get_all_caprimulgiformbird():
     response = []
 
-    for elem in huntingdogService.get_all():
+    for elem in caprimulgiformbirdService.get_all():
         response.append(elem.serialize())
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/size_huntingdog', methods=['POST'])
-def size_huntingdog():
-    response = huntingdogService.size()
+@app.route('/size_caprimulgiformbird', methods=['POST'])
+def size_caprimulgiformbird():
+    response = caprimulgiformbirdService.size()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/add_lapdog', methods=['POST'])
-def add_lapdog():
+@app.route('/add_carinate', methods=['POST'])
+def add_carinate():
     params = request.json
     
-    if lapdogService.add():
+    if carinateService.add():
         code = 200
         response = "OK"
     else:
@@ -608,11 +616,11 @@ def add_lapdog():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/update_lapdog', methods=['POST'])
-def update_lapdog():
+@app.route('/update_carinate', methods=['POST'])
+def update_carinate():
     params = request.json
     
-    if lapdogService.update():
+    if carinateService.update():
         code = 200
         response = "OK"
     else:
@@ -622,11 +630,11 @@ def update_lapdog():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/delete_lapdog', methods=['POST'])
-def delete_lapdog():
+@app.route('/delete_carinate', methods=['POST'])
+def delete_carinate():
     params = request.json
     
-    if lapdogService.delete():
+    if carinateService.delete():
         code = 200
         response = "OK"
     else:
@@ -636,37 +644,37 @@ def delete_lapdog():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/find_lapdog', methods=['POST'])
-def find_lapdog():
+@app.route('/find_carinate', methods=['POST'])
+def find_carinate():
     params = request.json
     
-    response = lapdogService.find()
+    response = carinateService.find()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/get_all_lapdog', methods=['POST'])
-def get_all_lapdog():
+@app.route('/get_all_carinate', methods=['POST'])
+def get_all_carinate():
     response = []
 
-    for elem in lapdogService.get_all():
+    for elem in carinateService.get_all():
         response.append(elem.serialize())
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/size_lapdog', methods=['POST'])
-def size_lapdog():
-    response = lapdogService.size()
+@app.route('/size_carinate', methods=['POST'])
+def size_carinate():
+    response = carinateService.size()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/add_leonberg', methods=['POST'])
-def add_leonberg():
+@app.route('/add_cock', methods=['POST'])
+def add_cock():
     params = request.json
     
-    if leonbergService.add():
+    if cockService.add():
         code = 200
         response = "OK"
     else:
@@ -676,11 +684,11 @@ def add_leonberg():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/update_leonberg', methods=['POST'])
-def update_leonberg():
+@app.route('/update_cock', methods=['POST'])
+def update_cock():
     params = request.json
     
-    if leonbergService.update():
+    if cockService.update():
         code = 200
         response = "OK"
     else:
@@ -690,11 +698,11 @@ def update_leonberg():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/delete_leonberg', methods=['POST'])
-def delete_leonberg():
+@app.route('/delete_cock', methods=['POST'])
+def delete_cock():
     params = request.json
     
-    if leonbergService.delete():
+    if cockService.delete():
         code = 200
         response = "OK"
     else:
@@ -704,37 +712,37 @@ def delete_leonberg():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/find_leonberg', methods=['POST'])
-def find_leonberg():
+@app.route('/find_cock', methods=['POST'])
+def find_cock():
     params = request.json
     
-    response = leonbergService.find()
+    response = cockService.find()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/get_all_leonberg', methods=['POST'])
-def get_all_leonberg():
+@app.route('/get_all_cock', methods=['POST'])
+def get_all_cock():
     response = []
 
-    for elem in leonbergService.get_all():
+    for elem in cockService.get_all():
         response.append(elem.serialize())
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/size_leonberg', methods=['POST'])
-def size_leonberg():
-    response = leonbergService.size()
+@app.route('/size_cock', methods=['POST'])
+def size_cock():
+    response = cockService.size()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/add_mexicanhairless', methods=['POST'])
-def add_mexicanhairless():
+@app.route('/add_coraciiformbird', methods=['POST'])
+def add_coraciiformbird():
     params = request.json
     
-    if mexicanhairlessService.add():
+    if coraciiformbirdService.add():
         code = 200
         response = "OK"
     else:
@@ -744,11 +752,11 @@ def add_mexicanhairless():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/update_mexicanhairless', methods=['POST'])
-def update_mexicanhairless():
+@app.route('/update_coraciiformbird', methods=['POST'])
+def update_coraciiformbird():
     params = request.json
     
-    if mexicanhairlessService.update():
+    if coraciiformbirdService.update():
         code = 200
         response = "OK"
     else:
@@ -758,11 +766,11 @@ def update_mexicanhairless():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/delete_mexicanhairless', methods=['POST'])
-def delete_mexicanhairless():
+@app.route('/delete_coraciiformbird', methods=['POST'])
+def delete_coraciiformbird():
     params = request.json
     
-    if mexicanhairlessService.delete():
+    if coraciiformbirdService.delete():
         code = 200
         response = "OK"
     else:
@@ -772,37 +780,37 @@ def delete_mexicanhairless():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/find_mexicanhairless', methods=['POST'])
-def find_mexicanhairless():
+@app.route('/find_coraciiformbird', methods=['POST'])
+def find_coraciiformbird():
     params = request.json
     
-    response = mexicanhairlessService.find()
+    response = coraciiformbirdService.find()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/get_all_mexicanhairless', methods=['POST'])
-def get_all_mexicanhairless():
+@app.route('/get_all_coraciiformbird', methods=['POST'])
+def get_all_coraciiformbird():
     response = []
 
-    for elem in mexicanhairlessService.get_all():
+    for elem in coraciiformbirdService.get_all():
         response.append(elem.serialize())
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/size_mexicanhairless', methods=['POST'])
-def size_mexicanhairless():
-    response = mexicanhairlessService.size()
+@app.route('/size_coraciiformbird', methods=['POST'])
+def size_coraciiformbird():
+    response = coraciiformbirdService.size()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/add_newfoundland', methods=['POST'])
-def add_newfoundland():
+@app.route('/add_cuculiformbird', methods=['POST'])
+def add_cuculiformbird():
     params = request.json
     
-    if newfoundlandService.add():
+    if cuculiformbirdService.add():
         code = 200
         response = "OK"
     else:
@@ -812,11 +820,11 @@ def add_newfoundland():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/update_newfoundland', methods=['POST'])
-def update_newfoundland():
+@app.route('/update_cuculiformbird', methods=['POST'])
+def update_cuculiformbird():
     params = request.json
     
-    if newfoundlandService.update():
+    if cuculiformbirdService.update():
         code = 200
         response = "OK"
     else:
@@ -826,11 +834,11 @@ def update_newfoundland():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/delete_newfoundland', methods=['POST'])
-def delete_newfoundland():
+@app.route('/delete_cuculiformbird', methods=['POST'])
+def delete_cuculiformbird():
     params = request.json
     
-    if newfoundlandService.delete():
+    if cuculiformbirdService.delete():
         code = 200
         response = "OK"
     else:
@@ -840,37 +848,37 @@ def delete_newfoundland():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/find_newfoundland', methods=['POST'])
-def find_newfoundland():
+@app.route('/find_cuculiformbird', methods=['POST'])
+def find_cuculiformbird():
     params = request.json
     
-    response = newfoundlandService.find()
+    response = cuculiformbirdService.find()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/get_all_newfoundland', methods=['POST'])
-def get_all_newfoundland():
+@app.route('/get_all_cuculiformbird', methods=['POST'])
+def get_all_cuculiformbird():
     response = []
 
-    for elem in newfoundlandService.get_all():
+    for elem in cuculiformbirdService.get_all():
         response.append(elem.serialize())
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/size_newfoundland', methods=['POST'])
-def size_newfoundland():
-    response = newfoundlandService.size()
+@app.route('/size_cuculiformbird', methods=['POST'])
+def size_cuculiformbird():
+    response = cuculiformbirdService.size()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/add_pooch', methods=['POST'])
-def add_pooch():
+@app.route('/add_dickeybird', methods=['POST'])
+def add_dickeybird():
     params = request.json
     
-    if poochService.add():
+    if dickeybirdService.add():
         code = 200
         response = "OK"
     else:
@@ -880,11 +888,11 @@ def add_pooch():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/update_pooch', methods=['POST'])
-def update_pooch():
+@app.route('/update_dickeybird', methods=['POST'])
+def update_dickeybird():
     params = request.json
     
-    if poochService.update():
+    if dickeybirdService.update():
         code = 200
         response = "OK"
     else:
@@ -894,11 +902,11 @@ def update_pooch():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/delete_pooch', methods=['POST'])
-def delete_pooch():
+@app.route('/delete_dickeybird', methods=['POST'])
+def delete_dickeybird():
     params = request.json
     
-    if poochService.delete():
+    if dickeybirdService.delete():
         code = 200
         response = "OK"
     else:
@@ -908,37 +916,37 @@ def delete_pooch():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/find_pooch', methods=['POST'])
-def find_pooch():
+@app.route('/find_dickeybird', methods=['POST'])
+def find_dickeybird():
     params = request.json
     
-    response = poochService.find()
+    response = dickeybirdService.find()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/get_all_pooch', methods=['POST'])
-def get_all_pooch():
+@app.route('/get_all_dickeybird', methods=['POST'])
+def get_all_dickeybird():
     response = []
 
-    for elem in poochService.get_all():
+    for elem in dickeybirdService.get_all():
         response.append(elem.serialize())
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/size_pooch', methods=['POST'])
-def size_pooch():
-    response = poochService.size()
+@app.route('/size_dickeybird', methods=['POST'])
+def size_dickeybird():
+    response = dickeybirdService.size()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/add_poodle', methods=['POST'])
-def add_poodle():
+@app.route('/add_gallinaceousbird', methods=['POST'])
+def add_gallinaceousbird():
     params = request.json
     
-    if poodleService.add():
+    if gallinaceousbirdService.add():
         code = 200
         response = "OK"
     else:
@@ -948,11 +956,11 @@ def add_poodle():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/update_poodle', methods=['POST'])
-def update_poodle():
+@app.route('/update_gallinaceousbird', methods=['POST'])
+def update_gallinaceousbird():
     params = request.json
     
-    if poodleService.update():
+    if gallinaceousbirdService.update():
         code = 200
         response = "OK"
     else:
@@ -962,11 +970,11 @@ def update_poodle():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/delete_poodle', methods=['POST'])
-def delete_poodle():
+@app.route('/delete_gallinaceousbird', methods=['POST'])
+def delete_gallinaceousbird():
     params = request.json
     
-    if poodleService.delete():
+    if gallinaceousbirdService.delete():
         code = 200
         response = "OK"
     else:
@@ -976,37 +984,37 @@ def delete_poodle():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/find_poodle', methods=['POST'])
-def find_poodle():
+@app.route('/find_gallinaceousbird', methods=['POST'])
+def find_gallinaceousbird():
     params = request.json
     
-    response = poodleService.find()
+    response = gallinaceousbirdService.find()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/get_all_poodle', methods=['POST'])
-def get_all_poodle():
+@app.route('/get_all_gallinaceousbird', methods=['POST'])
+def get_all_gallinaceousbird():
     response = []
 
-    for elem in poodleService.get_all():
+    for elem in gallinaceousbirdService.get_all():
         response.append(elem.serialize())
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/size_poodle', methods=['POST'])
-def size_poodle():
-    response = poodleService.size()
+@app.route('/size_gallinaceousbird', methods=['POST'])
+def size_gallinaceousbird():
+    response = gallinaceousbirdService.size()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/add_pug', methods=['POST'])
-def add_pug():
+@app.route('/add_hen', methods=['POST'])
+def add_hen():
     params = request.json
     
-    if pugService.add():
+    if henService.add():
         code = 200
         response = "OK"
     else:
@@ -1016,11 +1024,11 @@ def add_pug():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/update_pug', methods=['POST'])
-def update_pug():
+@app.route('/update_hen', methods=['POST'])
+def update_hen():
     params = request.json
     
-    if pugService.update():
+    if henService.update():
         code = 200
         response = "OK"
     else:
@@ -1030,11 +1038,11 @@ def update_pug():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/delete_pug', methods=['POST'])
-def delete_pug():
+@app.route('/delete_hen', methods=['POST'])
+def delete_hen():
     params = request.json
     
-    if pugService.delete():
+    if henService.delete():
         code = 200
         response = "OK"
     else:
@@ -1044,37 +1052,37 @@ def delete_pug():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/find_pug', methods=['POST'])
-def find_pug():
+@app.route('/find_hen', methods=['POST'])
+def find_hen():
     params = request.json
     
-    response = pugService.find()
+    response = henService.find()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/get_all_pug', methods=['POST'])
-def get_all_pug():
+@app.route('/get_all_hen', methods=['POST'])
+def get_all_hen():
     response = []
 
-    for elem in pugService.get_all():
+    for elem in henService.get_all():
         response.append(elem.serialize())
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/size_pug', methods=['POST'])
-def size_pug():
-    response = pugService.size()
+@app.route('/size_hen', methods=['POST'])
+def size_hen():
+    response = henService.size()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/add_puppy', methods=['POST'])
-def add_puppy():
+@app.route('/add_iberomesornis', methods=['POST'])
+def add_iberomesornis():
     params = request.json
     
-    if puppyService.add():
+    if iberomesornisService.add():
         code = 200
         response = "OK"
     else:
@@ -1084,11 +1092,11 @@ def add_puppy():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/update_puppy', methods=['POST'])
-def update_puppy():
+@app.route('/update_iberomesornis', methods=['POST'])
+def update_iberomesornis():
     params = request.json
     
-    if puppyService.update():
+    if iberomesornisService.update():
         code = 200
         response = "OK"
     else:
@@ -1098,11 +1106,11 @@ def update_puppy():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/delete_puppy', methods=['POST'])
-def delete_puppy():
+@app.route('/delete_iberomesornis', methods=['POST'])
+def delete_iberomesornis():
     params = request.json
     
-    if puppyService.delete():
+    if iberomesornisService.delete():
         code = 200
         response = "OK"
     else:
@@ -1112,37 +1120,37 @@ def delete_puppy():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/find_puppy', methods=['POST'])
-def find_puppy():
+@app.route('/find_iberomesornis', methods=['POST'])
+def find_iberomesornis():
     params = request.json
     
-    response = puppyService.find()
+    response = iberomesornisService.find()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/get_all_puppy', methods=['POST'])
-def get_all_puppy():
+@app.route('/get_all_iberomesornis', methods=['POST'])
+def get_all_iberomesornis():
     response = []
 
-    for elem in puppyService.get_all():
+    for elem in iberomesornisService.get_all():
         response.append(elem.serialize())
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/size_puppy', methods=['POST'])
-def size_puppy():
-    response = puppyService.size()
+@app.route('/size_iberomesornis', methods=['POST'])
+def size_iberomesornis():
+    response = iberomesornisService.size()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/add_spitz', methods=['POST'])
-def add_spitz():
+@app.route('/add_nester', methods=['POST'])
+def add_nester():
     params = request.json
     
-    if spitzService.add():
+    if nesterService.add():
         code = 200
         response = "OK"
     else:
@@ -1152,11 +1160,11 @@ def add_spitz():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/update_spitz', methods=['POST'])
-def update_spitz():
+@app.route('/update_nester', methods=['POST'])
+def update_nester():
     params = request.json
     
-    if spitzService.update():
+    if nesterService.update():
         code = 200
         response = "OK"
     else:
@@ -1166,11 +1174,11 @@ def update_spitz():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/delete_spitz', methods=['POST'])
-def delete_spitz():
+@app.route('/delete_nester', methods=['POST'])
+def delete_nester():
     params = request.json
     
-    if spitzService.delete():
+    if nesterService.delete():
         code = 200
         response = "OK"
     else:
@@ -1180,37 +1188,37 @@ def delete_spitz():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/find_spitz', methods=['POST'])
-def find_spitz():
+@app.route('/find_nester', methods=['POST'])
+def find_nester():
     params = request.json
     
-    response = spitzService.find()
+    response = nesterService.find()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/get_all_spitz', methods=['POST'])
-def get_all_spitz():
+@app.route('/get_all_nester', methods=['POST'])
+def get_all_nester():
     response = []
 
-    for elem in spitzService.get_all():
+    for elem in nesterService.get_all():
         response.append(elem.serialize())
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/size_spitz', methods=['POST'])
-def size_spitz():
-    response = spitzService.size()
+@app.route('/size_nester', methods=['POST'])
+def size_nester():
+    response = nesterService.size()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/add_toydog', methods=['POST'])
-def add_toydog():
+@app.route('/add_nightbird', methods=['POST'])
+def add_nightbird():
     params = request.json
     
-    if toydogService.add():
+    if nightbirdService.add():
         code = 200
         response = "OK"
     else:
@@ -1220,11 +1228,11 @@ def add_toydog():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/update_toydog', methods=['POST'])
-def update_toydog():
+@app.route('/update_nightbird', methods=['POST'])
+def update_nightbird():
     params = request.json
     
-    if toydogService.update():
+    if nightbirdService.update():
         code = 200
         response = "OK"
     else:
@@ -1234,11 +1242,11 @@ def update_toydog():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/delete_toydog', methods=['POST'])
-def delete_toydog():
+@app.route('/delete_nightbird', methods=['POST'])
+def delete_nightbird():
     params = request.json
     
-    if toydogService.delete():
+    if nightbirdService.delete():
         code = 200
         response = "OK"
     else:
@@ -1248,37 +1256,37 @@ def delete_toydog():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/find_toydog', methods=['POST'])
-def find_toydog():
+@app.route('/find_nightbird', methods=['POST'])
+def find_nightbird():
     params = request.json
     
-    response = toydogService.find()
+    response = nightbirdService.find()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/get_all_toydog', methods=['POST'])
-def get_all_toydog():
+@app.route('/get_all_nightbird', methods=['POST'])
+def get_all_nightbird():
     response = []
 
-    for elem in toydogService.get_all():
+    for elem in nightbirdService.get_all():
         response.append(elem.serialize())
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/size_toydog', methods=['POST'])
-def size_toydog():
-    response = toydogService.size()
+@app.route('/size_nightbird', methods=['POST'])
+def size_nightbird():
+    response = nightbirdService.size()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/add_workingdog', methods=['POST'])
-def add_workingdog():
+@app.route('/add_nonpasserinebird', methods=['POST'])
+def add_nonpasserinebird():
     params = request.json
     
-    if workingdogService.add():
+    if nonpasserinebirdService.add():
         code = 200
         response = "OK"
     else:
@@ -1288,11 +1296,11 @@ def add_workingdog():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/update_workingdog', methods=['POST'])
-def update_workingdog():
+@app.route('/update_nonpasserinebird', methods=['POST'])
+def update_nonpasserinebird():
     params = request.json
     
-    if workingdogService.update():
+    if nonpasserinebirdService.update():
         code = 200
         response = "OK"
     else:
@@ -1302,11 +1310,11 @@ def update_workingdog():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/delete_workingdog', methods=['POST'])
-def delete_workingdog():
+@app.route('/delete_nonpasserinebird', methods=['POST'])
+def delete_nonpasserinebird():
     params = request.json
     
-    if workingdogService.delete():
+    if nonpasserinebirdService.delete():
         code = 200
         response = "OK"
     else:
@@ -1316,27 +1324,571 @@ def delete_workingdog():
     return json.dumps({"code": code, "response": response})
 
 
-@app.route('/find_workingdog', methods=['POST'])
-def find_workingdog():
+@app.route('/find_nonpasserinebird', methods=['POST'])
+def find_nonpasserinebird():
     params = request.json
     
-    response = workingdogService.find()
+    response = nonpasserinebirdService.find()
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/get_all_workingdog', methods=['POST'])
-def get_all_workingdog():
+@app.route('/get_all_nonpasserinebird', methods=['POST'])
+def get_all_nonpasserinebird():
     response = []
 
-    for elem in workingdogService.get_all():
+    for elem in nonpasserinebirdService.get_all():
         response.append(elem.serialize())
 
     return json.dumps({"code": 200, "response": response})
 
 
-@app.route('/size_workingdog', methods=['POST'])
-def size_workingdog():
-    response = workingdogService.size()
+@app.route('/size_nonpasserinebird', methods=['POST'])
+def size_nonpasserinebird():
+    response = nonpasserinebirdService.size()
+
+    return json.dumps({"code": 200, "response": response})
+
+
+@app.route('/add_parrot', methods=['POST'])
+def add_parrot():
+    params = request.json
+    
+    if parrotService.add():
+        code = 200
+        response = "OK"
+    else:
+        code = 504
+        response = "Error"
+
+    return json.dumps({"code": code, "response": response})
+
+
+@app.route('/update_parrot', methods=['POST'])
+def update_parrot():
+    params = request.json
+    
+    if parrotService.update():
+        code = 200
+        response = "OK"
+    else:
+        code = 504
+        response = "Error"
+
+    return json.dumps({"code": code, "response": response})
+
+
+@app.route('/delete_parrot', methods=['POST'])
+def delete_parrot():
+    params = request.json
+    
+    if parrotService.delete():
+        code = 200
+        response = "OK"
+    else:
+        code = 504
+        response = "Error"
+
+    return json.dumps({"code": code, "response": response})
+
+
+@app.route('/find_parrot', methods=['POST'])
+def find_parrot():
+    params = request.json
+    
+    response = parrotService.find()
+
+    return json.dumps({"code": 200, "response": response})
+
+
+@app.route('/get_all_parrot', methods=['POST'])
+def get_all_parrot():
+    response = []
+
+    for elem in parrotService.get_all():
+        response.append(elem.serialize())
+
+    return json.dumps({"code": 200, "response": response})
+
+
+@app.route('/size_parrot', methods=['POST'])
+def size_parrot():
+    response = parrotService.size()
+
+    return json.dumps({"code": 200, "response": response})
+
+
+@app.route('/add_passerine', methods=['POST'])
+def add_passerine():
+    params = request.json
+    
+    if passerineService.add():
+        code = 200
+        response = "OK"
+    else:
+        code = 504
+        response = "Error"
+
+    return json.dumps({"code": code, "response": response})
+
+
+@app.route('/update_passerine', methods=['POST'])
+def update_passerine():
+    params = request.json
+    
+    if passerineService.update():
+        code = 200
+        response = "OK"
+    else:
+        code = 504
+        response = "Error"
+
+    return json.dumps({"code": code, "response": response})
+
+
+@app.route('/delete_passerine', methods=['POST'])
+def delete_passerine():
+    params = request.json
+    
+    if passerineService.delete():
+        code = 200
+        response = "OK"
+    else:
+        code = 504
+        response = "Error"
+
+    return json.dumps({"code": code, "response": response})
+
+
+@app.route('/find_passerine', methods=['POST'])
+def find_passerine():
+    params = request.json
+    
+    response = passerineService.find()
+
+    return json.dumps({"code": 200, "response": response})
+
+
+@app.route('/get_all_passerine', methods=['POST'])
+def get_all_passerine():
+    response = []
+
+    for elem in passerineService.get_all():
+        response.append(elem.serialize())
+
+    return json.dumps({"code": 200, "response": response})
+
+
+@app.route('/size_passerine', methods=['POST'])
+def size_passerine():
+    response = passerineService.size()
+
+    return json.dumps({"code": 200, "response": response})
+
+
+@app.route('/add_piciformbird', methods=['POST'])
+def add_piciformbird():
+    params = request.json
+    
+    if piciformbirdService.add():
+        code = 200
+        response = "OK"
+    else:
+        code = 504
+        response = "Error"
+
+    return json.dumps({"code": code, "response": response})
+
+
+@app.route('/update_piciformbird', methods=['POST'])
+def update_piciformbird():
+    params = request.json
+    
+    if piciformbirdService.update():
+        code = 200
+        response = "OK"
+    else:
+        code = 504
+        response = "Error"
+
+    return json.dumps({"code": code, "response": response})
+
+
+@app.route('/delete_piciformbird', methods=['POST'])
+def delete_piciformbird():
+    params = request.json
+    
+    if piciformbirdService.delete():
+        code = 200
+        response = "OK"
+    else:
+        code = 504
+        response = "Error"
+
+    return json.dumps({"code": code, "response": response})
+
+
+@app.route('/find_piciformbird', methods=['POST'])
+def find_piciformbird():
+    params = request.json
+    
+    response = piciformbirdService.find()
+
+    return json.dumps({"code": 200, "response": response})
+
+
+@app.route('/get_all_piciformbird', methods=['POST'])
+def get_all_piciformbird():
+    response = []
+
+    for elem in piciformbirdService.get_all():
+        response.append(elem.serialize())
+
+    return json.dumps({"code": 200, "response": response})
+
+
+@app.route('/size_piciformbird', methods=['POST'])
+def size_piciformbird():
+    response = piciformbirdService.size()
+
+    return json.dumps({"code": 200, "response": response})
+
+
+@app.route('/add_protoavis', methods=['POST'])
+def add_protoavis():
+    params = request.json
+    
+    if protoavisService.add():
+        code = 200
+        response = "OK"
+    else:
+        code = 504
+        response = "Error"
+
+    return json.dumps({"code": code, "response": response})
+
+
+@app.route('/update_protoavis', methods=['POST'])
+def update_protoavis():
+    params = request.json
+    
+    if protoavisService.update():
+        code = 200
+        response = "OK"
+    else:
+        code = 504
+        response = "Error"
+
+    return json.dumps({"code": code, "response": response})
+
+
+@app.route('/delete_protoavis', methods=['POST'])
+def delete_protoavis():
+    params = request.json
+    
+    if protoavisService.delete():
+        code = 200
+        response = "OK"
+    else:
+        code = 504
+        response = "Error"
+
+    return json.dumps({"code": code, "response": response})
+
+
+@app.route('/find_protoavis', methods=['POST'])
+def find_protoavis():
+    params = request.json
+    
+    response = protoavisService.find()
+
+    return json.dumps({"code": 200, "response": response})
+
+
+@app.route('/get_all_protoavis', methods=['POST'])
+def get_all_protoavis():
+    response = []
+
+    for elem in protoavisService.get_all():
+        response.append(elem.serialize())
+
+    return json.dumps({"code": 200, "response": response})
+
+
+@app.route('/size_protoavis', methods=['POST'])
+def size_protoavis():
+    response = protoavisService.size()
+
+    return json.dumps({"code": 200, "response": response})
+
+
+@app.route('/add_ratite', methods=['POST'])
+def add_ratite():
+    params = request.json
+    
+    if ratiteService.add():
+        code = 200
+        response = "OK"
+    else:
+        code = 504
+        response = "Error"
+
+    return json.dumps({"code": code, "response": response})
+
+
+@app.route('/update_ratite', methods=['POST'])
+def update_ratite():
+    params = request.json
+    
+    if ratiteService.update():
+        code = 200
+        response = "OK"
+    else:
+        code = 504
+        response = "Error"
+
+    return json.dumps({"code": code, "response": response})
+
+
+@app.route('/delete_ratite', methods=['POST'])
+def delete_ratite():
+    params = request.json
+    
+    if ratiteService.delete():
+        code = 200
+        response = "OK"
+    else:
+        code = 504
+        response = "Error"
+
+    return json.dumps({"code": code, "response": response})
+
+
+@app.route('/find_ratite', methods=['POST'])
+def find_ratite():
+    params = request.json
+    
+    response = ratiteService.find()
+
+    return json.dumps({"code": 200, "response": response})
+
+
+@app.route('/get_all_ratite', methods=['POST'])
+def get_all_ratite():
+    response = []
+
+    for elem in ratiteService.get_all():
+        response.append(elem.serialize())
+
+    return json.dumps({"code": 200, "response": response})
+
+
+@app.route('/size_ratite', methods=['POST'])
+def size_ratite():
+    response = ratiteService.size()
+
+    return json.dumps({"code": 200, "response": response})
+
+
+@app.route('/add_sinornis', methods=['POST'])
+def add_sinornis():
+    params = request.json
+    
+    if sinornisService.add():
+        code = 200
+        response = "OK"
+    else:
+        code = 504
+        response = "Error"
+
+    return json.dumps({"code": code, "response": response})
+
+
+@app.route('/update_sinornis', methods=['POST'])
+def update_sinornis():
+    params = request.json
+    
+    if sinornisService.update():
+        code = 200
+        response = "OK"
+    else:
+        code = 504
+        response = "Error"
+
+    return json.dumps({"code": code, "response": response})
+
+
+@app.route('/delete_sinornis', methods=['POST'])
+def delete_sinornis():
+    params = request.json
+    
+    if sinornisService.delete():
+        code = 200
+        response = "OK"
+    else:
+        code = 504
+        response = "Error"
+
+    return json.dumps({"code": code, "response": response})
+
+
+@app.route('/find_sinornis', methods=['POST'])
+def find_sinornis():
+    params = request.json
+    
+    response = sinornisService.find()
+
+    return json.dumps({"code": 200, "response": response})
+
+
+@app.route('/get_all_sinornis', methods=['POST'])
+def get_all_sinornis():
+    response = []
+
+    for elem in sinornisService.get_all():
+        response.append(elem.serialize())
+
+    return json.dumps({"code": 200, "response": response})
+
+
+@app.route('/size_sinornis', methods=['POST'])
+def size_sinornis():
+    response = sinornisService.size()
+
+    return json.dumps({"code": 200, "response": response})
+
+
+@app.route('/add_trogon', methods=['POST'])
+def add_trogon():
+    params = request.json
+    
+    if trogonService.add():
+        code = 200
+        response = "OK"
+    else:
+        code = 504
+        response = "Error"
+
+    return json.dumps({"code": code, "response": response})
+
+
+@app.route('/update_trogon', methods=['POST'])
+def update_trogon():
+    params = request.json
+    
+    if trogonService.update():
+        code = 200
+        response = "OK"
+    else:
+        code = 504
+        response = "Error"
+
+    return json.dumps({"code": code, "response": response})
+
+
+@app.route('/delete_trogon', methods=['POST'])
+def delete_trogon():
+    params = request.json
+    
+    if trogonService.delete():
+        code = 200
+        response = "OK"
+    else:
+        code = 504
+        response = "Error"
+
+    return json.dumps({"code": code, "response": response})
+
+
+@app.route('/find_trogon', methods=['POST'])
+def find_trogon():
+    params = request.json
+    
+    response = trogonService.find()
+
+    return json.dumps({"code": 200, "response": response})
+
+
+@app.route('/get_all_trogon', methods=['POST'])
+def get_all_trogon():
+    response = []
+
+    for elem in trogonService.get_all():
+        response.append(elem.serialize())
+
+    return json.dumps({"code": 200, "response": response})
+
+
+@app.route('/size_trogon', methods=['POST'])
+def size_trogon():
+    response = trogonService.size()
+
+    return json.dumps({"code": 200, "response": response})
+
+
+@app.route('/add_twitterer', methods=['POST'])
+def add_twitterer():
+    params = request.json
+    
+    if twittererService.add():
+        code = 200
+        response = "OK"
+    else:
+        code = 504
+        response = "Error"
+
+    return json.dumps({"code": code, "response": response})
+
+
+@app.route('/update_twitterer', methods=['POST'])
+def update_twitterer():
+    params = request.json
+    
+    if twittererService.update():
+        code = 200
+        response = "OK"
+    else:
+        code = 504
+        response = "Error"
+
+    return json.dumps({"code": code, "response": response})
+
+
+@app.route('/delete_twitterer', methods=['POST'])
+def delete_twitterer():
+    params = request.json
+    
+    if twittererService.delete():
+        code = 200
+        response = "OK"
+    else:
+        code = 504
+        response = "Error"
+
+    return json.dumps({"code": code, "response": response})
+
+
+@app.route('/find_twitterer', methods=['POST'])
+def find_twitterer():
+    params = request.json
+    
+    response = twittererService.find()
+
+    return json.dumps({"code": 200, "response": response})
+
+
+@app.route('/get_all_twitterer', methods=['POST'])
+def get_all_twitterer():
+    response = []
+
+    for elem in twittererService.get_all():
+        response.append(elem.serialize())
+
+    return json.dumps({"code": 200, "response": response})
+
+
+@app.route('/size_twitterer', methods=['POST'])
+def size_twitterer():
+    response = twittererService.size()
 
     return json.dumps({"code": 200, "response": response})

@@ -64,11 +64,13 @@ namespace DoodleRecognizerFront.ServerCommunication
             {
                 JsonResponse json_response = JsonConvert.DeserializeObject<JsonResponse>(response.Content);
 
-                return json_response.Code.ToString() + " " + json_response.Error;
+                if (json_response.Code == 200)
+                    return "Generation completed!";
+                return "There was an error. Sorry! ";
             }
             catch (Exception ex)
             {
-                return "There was an error. Sorry! " + ex.Message;
+                return "There was an error. Sorry! ";
             }
         }
 

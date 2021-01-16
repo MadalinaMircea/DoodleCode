@@ -1,84 +1,116 @@
 from flask import Flask
-from Classes.Repository.DogRepository import DogRepository
-from Classes.Repository.BasenjiRepository import BasenjiRepository
-from Classes.Repository.CorgiRepository import CorgiRepository
-from Classes.Repository.CurRepository import CurRepository
-from Classes.Repository.DalmatianRepository import DalmatianRepository
-from Classes.Repository.GreatpyreneesRepository import GreatpyreneesRepository
-from Classes.Repository.GriffonRepository import GriffonRepository
-from Classes.Repository.HuntingdogRepository import HuntingdogRepository
-from Classes.Repository.LapdogRepository import LapdogRepository
-from Classes.Repository.LeonbergRepository import LeonbergRepository
-from Classes.Repository.MexicanhairlessRepository import MexicanhairlessRepository
-from Classes.Repository.NewfoundlandRepository import NewfoundlandRepository
-from Classes.Repository.PoochRepository import PoochRepository
-from Classes.Repository.PoodleRepository import PoodleRepository
-from Classes.Repository.PugRepository import PugRepository
-from Classes.Repository.PuppyRepository import PuppyRepository
-from Classes.Repository.SpitzRepository import SpitzRepository
-from Classes.Repository.ToydogRepository import ToydogRepository
-from Classes.Repository.WorkingdogRepository import WorkingdogRepository
-from Classes.Service.DogService import DogService
-from Classes.Service.BasenjiService import BasenjiService
-from Classes.Service.CorgiService import CorgiService
-from Classes.Service.CurService import CurService
-from Classes.Service.DalmatianService import DalmatianService
-from Classes.Service.GreatpyreneesService import GreatpyreneesService
-from Classes.Service.GriffonService import GriffonService
-from Classes.Service.HuntingdogService import HuntingdogService
-from Classes.Service.LapdogService import LapdogService
-from Classes.Service.LeonbergService import LeonbergService
-from Classes.Service.MexicanhairlessService import MexicanhairlessService
-from Classes.Service.NewfoundlandService import NewfoundlandService
-from Classes.Service.PoochService import PoochService
-from Classes.Service.PoodleService import PoodleService
-from Classes.Service.PugService import PugService
-from Classes.Service.PuppyService import PuppyService
-from Classes.Service.SpitzService import SpitzService
-from Classes.Service.ToydogService import ToydogService
-from Classes.Service.WorkingdogService import WorkingdogService
+from Classes.Repository.BirdRepository import BirdRepository
+from Classes.Repository.ApodiformbirdRepository import ApodiformbirdRepository
+from Classes.Repository.AquaticbirdRepository import AquaticbirdRepository
+from Classes.Repository.ArchaeopteryxRepository import ArchaeopteryxRepository
+from Classes.Repository.ArchaeornisRepository import ArchaeornisRepository
+from Classes.Repository.BirdofpassageRepository import BirdofpassageRepository
+from Classes.Repository.BirdofpreyRepository import BirdofpreyRepository
+from Classes.Repository.CaprimulgiformbirdRepository import CaprimulgiformbirdRepository
+from Classes.Repository.CarinateRepository import CarinateRepository
+from Classes.Repository.CockRepository import CockRepository
+from Classes.Repository.CoraciiformbirdRepository import CoraciiformbirdRepository
+from Classes.Repository.CuculiformbirdRepository import CuculiformbirdRepository
+from Classes.Repository.DickeybirdRepository import DickeybirdRepository
+from Classes.Repository.GallinaceousbirdRepository import GallinaceousbirdRepository
+from Classes.Repository.HenRepository import HenRepository
+from Classes.Repository.IberomesornisRepository import IberomesornisRepository
+from Classes.Repository.NesterRepository import NesterRepository
+from Classes.Repository.NightbirdRepository import NightbirdRepository
+from Classes.Repository.NonpasserinebirdRepository import NonpasserinebirdRepository
+from Classes.Repository.ParrotRepository import ParrotRepository
+from Classes.Repository.PasserineRepository import PasserineRepository
+from Classes.Repository.PiciformbirdRepository import PiciformbirdRepository
+from Classes.Repository.ProtoavisRepository import ProtoavisRepository
+from Classes.Repository.RatiteRepository import RatiteRepository
+from Classes.Repository.SinornisRepository import SinornisRepository
+from Classes.Repository.TrogonRepository import TrogonRepository
+from Classes.Repository.TwittererRepository import TwittererRepository
+from Classes.Service.BirdService import BirdService
+from Classes.Service.ApodiformbirdService import ApodiformbirdService
+from Classes.Service.AquaticbirdService import AquaticbirdService
+from Classes.Service.ArchaeopteryxService import ArchaeopteryxService
+from Classes.Service.ArchaeornisService import ArchaeornisService
+from Classes.Service.BirdofpassageService import BirdofpassageService
+from Classes.Service.BirdofpreyService import BirdofpreyService
+from Classes.Service.CaprimulgiformbirdService import CaprimulgiformbirdService
+from Classes.Service.CarinateService import CarinateService
+from Classes.Service.CockService import CockService
+from Classes.Service.CoraciiformbirdService import CoraciiformbirdService
+from Classes.Service.CuculiformbirdService import CuculiformbirdService
+from Classes.Service.DickeybirdService import DickeybirdService
+from Classes.Service.GallinaceousbirdService import GallinaceousbirdService
+from Classes.Service.HenService import HenService
+from Classes.Service.IberomesornisService import IberomesornisService
+from Classes.Service.NesterService import NesterService
+from Classes.Service.NightbirdService import NightbirdService
+from Classes.Service.NonpasserinebirdService import NonpasserinebirdService
+from Classes.Service.ParrotService import ParrotService
+from Classes.Service.PasserineService import PasserineService
+from Classes.Service.PiciformbirdService import PiciformbirdService
+from Classes.Service.ProtoavisService import ProtoavisService
+from Classes.Service.RatiteService import RatiteService
+from Classes.Service.SinornisService import SinornisService
+from Classes.Service.TrogonService import TrogonService
+from Classes.Service.TwittererService import TwittererService
 
 
 app = Flask(__name__)
 
-dogRepo = DogRepository()
-dogService = DogService(dogRepo)
-basenjiRepo = BasenjiRepository()
-basenjiService = BasenjiService(basenjiRepo)
-corgiRepo = CorgiRepository()
-corgiService = CorgiService(corgiRepo)
-curRepo = CurRepository()
-curService = CurService(curRepo)
-dalmatianRepo = DalmatianRepository()
-dalmatianService = DalmatianService(dalmatianRepo)
-greatpyreneesRepo = GreatpyreneesRepository()
-greatpyreneesService = GreatpyreneesService(greatpyreneesRepo)
-griffonRepo = GriffonRepository()
-griffonService = GriffonService(griffonRepo)
-huntingdogRepo = HuntingdogRepository()
-huntingdogService = HuntingdogService(huntingdogRepo)
-lapdogRepo = LapdogRepository()
-lapdogService = LapdogService(lapdogRepo)
-leonbergRepo = LeonbergRepository()
-leonbergService = LeonbergService(leonbergRepo)
-mexicanhairlessRepo = MexicanhairlessRepository()
-mexicanhairlessService = MexicanhairlessService(mexicanhairlessRepo)
-newfoundlandRepo = NewfoundlandRepository()
-newfoundlandService = NewfoundlandService(newfoundlandRepo)
-poochRepo = PoochRepository()
-poochService = PoochService(poochRepo)
-poodleRepo = PoodleRepository()
-poodleService = PoodleService(poodleRepo)
-pugRepo = PugRepository()
-pugService = PugService(pugRepo)
-puppyRepo = PuppyRepository()
-puppyService = PuppyService(puppyRepo)
-spitzRepo = SpitzRepository()
-spitzService = SpitzService(spitzRepo)
-toydogRepo = ToydogRepository()
-toydogService = ToydogService(toydogRepo)
-workingdogRepo = WorkingdogRepository()
-workingdogService = WorkingdogService(workingdogRepo)
+birdRepo = BirdRepository()
+birdService = BirdService(birdRepo)
+apodiformbirdRepo = ApodiformbirdRepository()
+apodiformbirdService = ApodiformbirdService(apodiformbirdRepo)
+aquaticbirdRepo = AquaticbirdRepository()
+aquaticbirdService = AquaticbirdService(aquaticbirdRepo)
+archaeopteryxRepo = ArchaeopteryxRepository()
+archaeopteryxService = ArchaeopteryxService(archaeopteryxRepo)
+archaeornisRepo = ArchaeornisRepository()
+archaeornisService = ArchaeornisService(archaeornisRepo)
+birdofpassageRepo = BirdofpassageRepository()
+birdofpassageService = BirdofpassageService(birdofpassageRepo)
+birdofpreyRepo = BirdofpreyRepository()
+birdofpreyService = BirdofpreyService(birdofpreyRepo)
+caprimulgiformbirdRepo = CaprimulgiformbirdRepository()
+caprimulgiformbirdService = CaprimulgiformbirdService(caprimulgiformbirdRepo)
+carinateRepo = CarinateRepository()
+carinateService = CarinateService(carinateRepo)
+cockRepo = CockRepository()
+cockService = CockService(cockRepo)
+coraciiformbirdRepo = CoraciiformbirdRepository()
+coraciiformbirdService = CoraciiformbirdService(coraciiformbirdRepo)
+cuculiformbirdRepo = CuculiformbirdRepository()
+cuculiformbirdService = CuculiformbirdService(cuculiformbirdRepo)
+dickeybirdRepo = DickeybirdRepository()
+dickeybirdService = DickeybirdService(dickeybirdRepo)
+gallinaceousbirdRepo = GallinaceousbirdRepository()
+gallinaceousbirdService = GallinaceousbirdService(gallinaceousbirdRepo)
+henRepo = HenRepository()
+henService = HenService(henRepo)
+iberomesornisRepo = IberomesornisRepository()
+iberomesornisService = IberomesornisService(iberomesornisRepo)
+nesterRepo = NesterRepository()
+nesterService = NesterService(nesterRepo)
+nightbirdRepo = NightbirdRepository()
+nightbirdService = NightbirdService(nightbirdRepo)
+nonpasserinebirdRepo = NonpasserinebirdRepository()
+nonpasserinebirdService = NonpasserinebirdService(nonpasserinebirdRepo)
+parrotRepo = ParrotRepository()
+parrotService = ParrotService(parrotRepo)
+passerineRepo = PasserineRepository()
+passerineService = PasserineService(passerineRepo)
+piciformbirdRepo = PiciformbirdRepository()
+piciformbirdService = PiciformbirdService(piciformbirdRepo)
+protoavisRepo = ProtoavisRepository()
+protoavisService = ProtoavisService(protoavisRepo)
+ratiteRepo = RatiteRepository()
+ratiteService = RatiteService(ratiteRepo)
+sinornisRepo = SinornisRepository()
+sinornisService = SinornisService(sinornisRepo)
+trogonRepo = TrogonRepository()
+trogonService = TrogonService(trogonRepo)
+twittererRepo = TwittererRepository()
+twittererService = TwittererService(twittererRepo)
 
 
 from app import routes
